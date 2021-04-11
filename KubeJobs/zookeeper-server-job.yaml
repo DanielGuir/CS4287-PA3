@@ -19,6 +19,8 @@ spec:                     # This is the specification where we can even put the 
           image: 129.114.25.218:5000/testimage   # this is the image in registry accessible
                                              # from all our workers
           imagePullPolicy: Always  # This forces the node to pull the image
-          command: ["~/kafka_2.13-2.7.0/bin/zookeeper-server-start.sh"]
-          args: ["~/server.properties",]  # arguments to run. 
+          command: ["/kafka_2.13-2.7.0/bin/zookeeper-server-start.sh"]
+          args: ["/kafka_2.13-2.7.0/config/zookeeper.properties",]  # arguments to run. 
       restartPolicy: Never  # we ask Kubernetes not to restart
+
+      #FIXED

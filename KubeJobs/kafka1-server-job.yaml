@@ -19,6 +19,6 @@ spec:                     # This is the specification where we can even put the 
           image: 129.114.25.218:5000/testimage   # this is the image in registry accessible
                                              # from all our workers
           imagePullPolicy: Always  # This forces the node to pull the image
-          command: ["~/kafka_2.13-2.7.0/bin/kafka-server-start.sh"]
-          args: ["~/server.properties","--overide","broker_id=3","--override","advertised.listeners=PLAINTEXT://129.114.25.218:9092", "--override", "zookeeper.connect=zookeeper-server-svc:2181"]  # arguments to run. 
+          command: ["/kafka_2.13-2.7.0/bin/kafka-server-start.sh"]
+          args: ["/kafka_2.13-2.7.0/config/server.properties","--overide","broker_id=3","--override","advertised.listeners=PLAINTEXT://129.114.25.218:9092", "--override", "zookeeper.connect=zookeeper-server-svc:2181"]  # arguments to run. 
       restartPolicy: Never  # we ask Kubernetes not to restart
