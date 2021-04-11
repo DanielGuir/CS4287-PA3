@@ -1,0 +1,38 @@
+After the vagrant / ansible is complete:
+
+1. Ssh into VM2. Add 
+129.114.25.218 estopinalgui2 kubemaster kubeworker1
+
+To /etc/hosts
+
+2. Ssh into VM3. Add
+129.114.26.92 estopinalgui3 kubeworker2
+
+To /etc/hosts
+
+3. In VM2, execute
+sudo kubeadm init --node-name kubemaster --pod-network-cidr=10.244.0.0/16
+
+mkdir -p $HOME/.kube
+
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+
+sudo chown $(id iu):$(id -g) $HOME/.kube/config 
+
+kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+
+4. In VM2 run 
+
+kubeadm token create --print-join-command
+
+And execute the printed command in VM3 to join the cluster
+
+5. Execute
+
+kubectl apply -f nginx-deployment.yaml
+
+For development, and
+
+kubectl apply -f sample-job.yaml
+
+For sample worker.

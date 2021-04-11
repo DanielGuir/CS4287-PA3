@@ -1,0 +1,21 @@
+---
+     
+ - name: Start consumer
+   shell: python3 consumer.py
+   args:
+     chdir: /home/cc/
+   async: 500
+   poll: 0
+
+
+
+
+
+ #   register: output
+
+ # - name: Print the output
+ #   debug:
+ #     msg: "{{ output }}"
+
+
+...

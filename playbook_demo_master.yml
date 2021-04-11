@@ -1,0 +1,128 @@
+---
+#
+# EECS 4287/5287: Principles of Cloud Computing
+# Author: Aniruddha Gokhale
+# Created: Fall 2017
+# Modified: Fall 2020
+#
+# This playbook is our demo master file
+# The goal is to show how to have a single master file which then
+# includes multiple plays according to some well-designed choreography
+#
+# This file is similar to the one in the AnsibleOnly_Local_and_Cloud folder
+# For now I just kept one play in here but feel free to add more.
+#####################################################
+### Play 1: Get facts from all our VMs
+#
+# Here I show the use of import_tasks from child playbooks
+#####################################################
+
+
+
+- name: "Spawn cloud vms"
+  hosts: MyLocalVMs          # specified in the MyInventory file
+  remote_user:  vagrant      # note that the user is ubuntu for 
+                             # vagrant-created VM else use the
+                             # appropriate user name
+
+  gather_facts: yes          # We ask Ansible to collect all facts
+  become_user: no            # No need for sudo as we are not installing anything
+
+  tasks:    # the task to be performed (here I am showing the effect of include_)
+ # - include_tasks: tasks/playbook_get_facts_local_vm.yml
+ # - include_tasks: tasks/playbook_get_facts_cloud_vm.yml
+   - include_tasks: tasks/spawn_machine.yaml
+
+- name: "Setup VM2"
+  hosts: VM2  # change to the appropriate alias
+  remote_user:  cc   # change to the appropriate user name on the cloud
+  become: yes
+  collections:   # this is new starting with Ansible 2.9 (akin to importing package)
+    - openstack.cloud
+
+  # We will copy this very playbook file to the other side :-)
+  # Note the "mode" parameter, which will be handy if you need to change
+  # the permissions of the file after copying
+  tasks:
+#  - include_tasks: tasks/copy_consumer_to_cloud.yml
+  - include_tasks: tasks/setup_vm2.yaml
+
+- name: "Setup VM3"
+  hosts: VM3  # change to the appropriate alias
+  remote_user:  cc   # change to the appropriate user name on the cloud
+  become: yes
+  collections:   # this is new starting with Ansible 2.9 (akin to importing package)
+    - openstack.cloud
+
+  # We will copy this very playbook file to the other side :-)
+  # Note the "mode" parameter, which will be handy if you need to change
+  # the permissions of the file after copying
+  tasks:
+#  - include_tasks: tasks/copy_consumer_to_cloud.yml
+  - include_tasks: tasks/setup_vm3.yaml
+
+# - name: "Setup Couchdb"
+#   hosts: VM3
+#   remote_user:  cc
+#   collections:
+#     - openstack.cloud
+
+#   tasks:
+#   - include_tasks: tasks/setup_couchdb.yaml
+
+
+- name: "Create and join cluster"
+  hosts: VM2  # change to the appropriate alias
+  gather_facts: yes
+  remote_user:  cc   # change to the appropriate user name on the cloud
+  collections:   # this is new starting with Ansible 2.9 (akin to importing package)
+    - openstack.cloud
+
+  # We will copy this very playbook file to the other side :-)
+  # Note the "mode" parameter, which will be handy if you need to change
+  # the permissions of the file after copying
+  tasks:
+#  - include_tasks: tasks/copy_consumer_to_cloud.yml
+  - include_tasks: tasks/setup_kubernetes_vm2.yaml
+
+- name: "Join cluster"
+  hosts: VM3  # change to the appropriate alias
+  gather_facts: yes
+  become: yes
+  remote_user:  cc   # change to the appropriate user name on the cloud
+  collections:   # this is new starting with Ansible 2.9 (akin to importing package)
+    - openstack.cloud
+
+  # We will copy this very playbook file to the other side :-)
+  # Note the "mode" parameter, which will be handy if you need to change
+  # the permissions of the file after copying
+  tasks:
+#  - include_tasks: tasks/copy_consumer_to_cloud.yml
+  - include_tasks: tasks/setup_kubernetes_vm3.yaml
+
+- name: "Taint master"
+  hosts: VM2  # change to the appropriate alias
+  gather_facts: yes
+  become: yes
+  remote_user:  cc   # change to the appropriate user name on the cloud
+  collections:   # this is new starting with Ansible 2.9 (akin to importing package)
+    - openstack.cloud
+
+  # We will copy this very playbook file to the other side :-)
+  # Note the "mode" parameter, which will be handy if you need to change
+  # the permissions of the file after copying
+  tasks:
+#  - include_tasks: tasks/copy_consumer_to_cloud.yml
+  - include_tasks: tasks/Execute_Pods.yaml
+
+# - name: "Start consumer"
+#   hosts: VM2
+#   remote_user:  cc
+#   collections:
+#     - openstack.cloud
+
+#   tasks:
+#   - include_tasks: tasks/start_consumer.yaml
+
+# ...
+

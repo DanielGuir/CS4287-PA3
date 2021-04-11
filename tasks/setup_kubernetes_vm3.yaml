@@ -1,0 +1,24 @@
+---
+
+ # - name: Start Kafka broker 2
+ 
+ #   command: bin/kafka-server-start.sh config/server.properties
+ #   args:
+ #     chdir: /home/cc/kafka_2.13-2.7.0
+ #   async: 500
+ #   poll: 0
+   # command: bin/zookeeper-server-start.sh config/zookeeper.properties
+   # args:
+   #   chdir: /home/cc/kafka_2.13-2.7.0
+ - name: Join cluster
+   command: "{{ hostvars['cc@129.114.25.218']['output']['stdout'] }}"
+
+
+ #   register: output
+
+ # - name: Print the output
+ #   debug:
+ #     msg: "{{ output }}"
+
+
+...

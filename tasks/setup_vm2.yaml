@@ -1,0 +1,142 @@
+---
+
+#  - name: copy consumer
+
+   copy:
+        src: ./consumer.py   # here you can give absolute path also.
+        dest: /home/cc/    # destination directory into which this file will
+
+#  - name: copy property
+
+#    copy:
+#         src: ./server1.properties   # here you can give absolute path also.
+#         dest: /home/cc/    # destination directory into which this file will
+
+#  - name: copy deployment
+#    copy:
+#         src: ./nginx-deployment.yaml
+#         dest: /home/cc/
+#  - name: copy worker
+#    copy:
+#         src: ./sample-job.yaml
+#         dest: /home/cc/
+
+ - name: copy ini
+   become: yes
+   copy:
+    src: ./local.ini   # here you can give absolute path also.
+    dest: /home/cc/   # destination directory into which this file will
+
+ - name: copy kube jobs
+   copy:
+     src: /vagrant/KubeJobs
+     dest: /home/cc/
+
+ - name: copy dockerfile
+   copy:
+     src: /vagrant/dockerfile
+     dest: /home/cc/
+
+ - name: execute command1
+   command: sudo ufw allow 9092
+ - name: execute command2
+   command: sudo ufw allow 2181
+ - name: execute command3
+   command: sudo ufw allow 5984
+ - name: execute command ufw
+   command: sudo ufw allow 5000
+ - name: execute command ufw
+   command: sudo ufw limit 2379:2380/tcp
+ - name: execute command ufw
+   command: sudo ufw limit 6443/tcp
+ - name: execute command ufw
+   command: sudo ufw limit 10250:10252/tcp
+ - name: execute command ufw
+   command: sudo ufw limit 8285/udp
+ - name: execute command ufw
+   command: sudo ufw limit 8472/udp
+ - name: execute command ufw
+   command: sudo ufw limit 30000:30004/tcp
+ - name: execute command ufw
+   command: sudo ufw limit 30005/tcp
+ - name: execute command ufw
+   command: sudo ufw limit 30006/tcp
+
+ # - name: execute command4
+ #   command: wget https://apache.osuosl.org/kafka/2.7.0/kafka_2.13-2.7.0.tgz -P /home/cc/
+ # - name: execute command5
+ #   command: sudo apt-get -y install unzip
+ # - name: execute command6
+ #   command: tar -xzf /home/cc/kafka_2.13-2.7.0.tgz
+ # - name: execute command7
+ #   command: sudo apt-get -y update
+ # - name: execute command8
+ #   command: sudo apt-get -y install python3
+ # - name: execute command9
+ #   command: sudo apt-get -y install python3-pip
+ # - name: execute command10
+ #   command: sudo pip3 install kafka
+ # - name: execute command11
+ #   command: sudo pip3 install couchdb
+ # - name: execute command12
+ #   command: sudo apt -y install openjdk-8-jre
+ # - name: execute command13
+ #   command: sudo cp /home/cc/server1.properties /home/cc/kafka_2.13-2.7.0/config/server.properties
+   # assignment 3
+ - name: docker 1
+   command: sudo apt install -y apt-transport-https ca-certificates curl gnupg-agent software-properties-common
+ - name: docker 2
+   shell: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+ - name: docker 3
+   command: sudo apt-key fingerprint 0EBFCD88
+ - name: docker 4
+   command: sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
+ - name: docker 5
+   command: sudo apt update
+ - name: docker 6
+   command: sudo apt install -y docker-ce docker-ce-cli containerd.io
+
+ - name: install kubernetes 1
+   command: sudo apt update
+ - name: install kubernetes 2
+   command: sudo apt install -y apt-transport-https gnupg2 curl
+ - name: install kubernetes 3
+   shell: echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
+ - name: install kubernetes 4
+   command: sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 6A030B21BA07F4FB
+ - name: install kubernetes 4
+   command: sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 8B57C5C2836F4BEB 
+ - name: install kubernetes 4
+   command: sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys FEEA9169307EA071
+ - name: install kubernetes 5
+   command: sudo apt update
+ - name: install kubernetes 6
+   command: sudo apt install -y kubeadm kubelet kubectl kubernetes-cni
+   # command: bin/zookeeper-server-start.sh config/zookeeper.properties
+   # args:
+   #   chdir: /home/cc/kafka_2.13-2.7.0
+ - name: disable swap
+   command: sudo swapoff -a 
+
+# start docker registry
+ - name: start docker registry
+   command: sudo docker run -d -p 5000:5000 --restart=always --name registry registry:2
+
+ - name: modify hosts in vm2
+   ansible.builtin.lineinfile:
+     owner: root
+     group: root
+     path: /etc/hosts
+     line: 129.114.25.218 estopinalgui2 kubemaster kubeworker1
+
+
+
+
+ #   register: output
+
+ # - name: Print the output
+ #   debug:
+ #     msg: "{{ output }}"
+
+
+...

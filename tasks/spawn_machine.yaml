@@ -1,0 +1,32 @@
+---
+
+  - name: Spawn VM2   # This is just for printing out.
+    openstack.cloud.server:
+      state: present
+      cloud: openstack
+      client_key: "/home/vagrant/.ssh/EstopinalGui.pem"
+      name: EstopinalGui2
+      security_groups: ['ENABLE_SSH', 'ENABLE_HTTP_HTTPS', '667273fd-a67a-4ca2-8a68-3088220e6374', 'ENABLE_KAFKA_COUCHDB', 'ENABLE_K8S']
+      flavor: "m1.medium"
+      image: 26e498cd-a792-4f64-815f-bb00724916c8
+      key_name: EstopinalGui
+      network: CH-819381-net
+      timeout: 600
+      floating_ips:
+        - 129.114.25.218
+
+  - name: Spawn VM3   # This is just for printing out.
+    openstack.cloud.server:
+      state: present
+      cloud: openstack
+      client_key: "/home/vagrant/.ssh/EstopinalGui.pem"
+      name: EstopinalGui3
+      security_groups: ['ENABLE_SSH', 'ENABLE_HTTP_HTTPS', '667273fd-a67a-4ca2-8a68-3088220e6374', 'ENABLE_KAFKA_COUCHDB', 'ENABLE_K8S']
+      flavor: "m1.small"
+      image: 26e498cd-a792-4f64-815f-bb00724916c8
+      key_name: EstopinalGui
+      network: CH-819381-net
+      timeout: 600
+      floating_ips:
+        - 129.114.26.92
+...

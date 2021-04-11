@@ -1,0 +1,75 @@
+---
+
+ - name: get certificates
+   command: sudo apt-get install -y gnupg ca-certificates
+ - name: add couchdb to sources
+   shell: echo "deb https://apache.bintray.com/couchdb-deb bionic main" | sudo tee -a /etc/apt/sources.list
+ - name: get key from server
+   command: sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 8756C4F765C9AC3CB6B85D62379CE192D401AB61
+
+ - name: update apt
+   command: sudo apt update
+
+ - name: install couchdb
+   apt: name=couchdb state=present
+   become: yes
+
+ - name: copy ini
+   become: yes
+   copy:
+    src: ./local.ini   # here you can give absolute path also.
+    dest: /opt/couchdb/etc/    # destination directory into which this file will
+
+ - name: restart couchdb service
+   command: sudo /etc/init.d/couchdb restart
+ # - name: Reboot
+ #   become: yes
+ #   shell: "sleep 5 && reboot"
+ #   async: 1
+ #   poll: 0
+
+ # - name: wait for connection
+ #   wait_for_connection:
+ #     connect_timeout: 15
+ #     sleep: 5
+ #     delay: 5
+ #     timeout: 300
+
+
+
+     
+ # - name: Start consumer
+ #   command: python3 consumer.py > /home/cc/output.txt
+ #   args:
+ #     chdir: /home/cc/
+ #   async: 500
+ #   poll: 10
+ #
+ # - name: set debconf settings
+ #   shell: echo "couchdb couchdb/mode select standalone" | sudo debconf-set-selections
+ # - name: set debconf settings
+ #  shell: echo "couchdb couchdb/mode seen true" | sudo debconf-set-selections
+ # - name: set debconf settings
+ #  shell: echo "couchdb couchdb/bindaddress string 0.0.0.0" | sudo debconf-set-selections
+ # - name: set debconf settings
+ #  shell: echo "couchdb couchdb/bindaddress seen true" | sudo debconf-set-selections
+ # - name: set debconf settings
+ #  shell: echo "couchdb couchdb/adminpass password estopinalgui" | sudo debconf-set-selections
+ # - name: set debconf settings
+ #  shell: echo "couchdb couchdb/adminpass seen true" | sudo debconf-set-selections
+ # - name: set debconf settings
+ #  shell: echo "couchdb couchdb/adminpass_again password estopinalgui" | sudo debconf-set-selections
+ # - name: set debconf settings
+ #  shell: echo "couchdb couchdb/adminpass_again seen true" | sudo debconf-set-selections
+
+
+
+
+ #   register: output
+
+ # - name: Print the output
+ #   debug:
+ #     msg: "{{ output }}"
+
+
+...
