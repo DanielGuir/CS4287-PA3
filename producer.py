@@ -23,7 +23,7 @@ from kafka import KafkaProducer  # producer of events
 
 # acquire the producer
 # (you will need to change this to your bootstrap server's IP addr)
-producer = KafkaProducer (bootstrap_servers="129.114.26.92:30002", 
+producer = KafkaProducer (bootstrap_servers="129.114.25.218:30002", 
                                           acks=1)  # wait for leader to write to log
 
 print('connected!')

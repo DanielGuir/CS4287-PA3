@@ -19,19 +19,19 @@
 
 
 
-# - name: "Spawn cloud vms"
-#   hosts: MyLocalVMs          # specified in the MyInventory file
-#   remote_user:  vagrant      # note that the user is ubuntu for 
-#                              # vagrant-created VM else use the
-#                              # appropriate user name
+- name: "Spawn cloud vms"
+  hosts: MyLocalVMs          # specified in the MyInventory file
+  remote_user:  vagrant      # note that the user is ubuntu for 
+                             # vagrant-created VM else use the
+                             # appropriate user name
 
-#   gather_facts: yes          # We ask Ansible to collect all facts
-#   become_user: no            # No need for sudo as we are not installing anything
+  gather_facts: yes          # We ask Ansible to collect all facts
+  become_user: no            # No need for sudo as we are not installing anything
 
-#   tasks:    # the task to be performed (here I am showing the effect of include_)
-#  # - include_tasks: tasks/playbook_get_facts_local_vm.yml
-#  # - include_tasks: tasks/playbook_get_facts_cloud_vm.yml
-#    - include_tasks: tasks/spawn_machine.yaml
+  tasks:    # the task to be performed (here I am showing the effect of include_)
+ # - include_tasks: tasks/playbook_get_facts_local_vm.yml
+ # - include_tasks: tasks/playbook_get_facts_cloud_vm.yml
+   - include_tasks: tasks/spawn_machine.yaml
 
 - name: "Setup VM2"
   hosts: VM2  # change to the appropriate alias

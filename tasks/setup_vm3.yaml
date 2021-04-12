@@ -90,7 +90,7 @@
  - name: copy daemon
    become: yes
    copy:
-    src: ./daemon.json   # here you can give absolute path also.
+    src: /vagrant/daemon.json   # here you can give absolute path also.
     dest: /etc/docker  # destination directory into which this file will
 
  - name: modify hosts in vm2
