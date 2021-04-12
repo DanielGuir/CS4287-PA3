@@ -12,7 +12,7 @@ RUN apt-get -y install unzip
 RUN tar -xzf /kafka_2.13-2.7.0.tgz
 RUN apt-get -y install python3
 RUN apt-get -y install python3-pip
-RUN pip3 install --upgrade kafka
+RUN pip3 install --upgrade kafka-python
 RUN pip3 install --upgrade couchdb
 RUN apt -y install openjdk-8-jre
 
@@ -28,7 +28,7 @@ COPY local.ini /opt/couchdb/etc
 # Copy files
 #COPY server1.properties /
 #COPY server2.properties /
-#COPY consumer.py /
+COPY consumer.py /
 #
 # Run a command shell (for Swarm and Kubernetes, we comment this out)
 #CMD /bin/bash

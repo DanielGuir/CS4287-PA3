@@ -1,7 +1,5 @@
 ---
-
-#  - name: copy consumer
-
+ - name: copy consumer
    copy:
         src: ./consumer.py   # here you can give absolute path also.
         dest: /home/cc/    # destination directory into which this file will
@@ -118,9 +116,14 @@
  - name: disable swap
    command: sudo swapoff -a 
 
+ - name: copy daemon
+   become: yes
+   copy:
+    src: ./daemon.json   # here you can give absolute path also.
+    dest: /etc/docker  # destination directory into which this file will
+
 # start docker registry
- - name: start docker registry
-   command: sudo docker run -d -p 5000:5000 --restart=always --name registry registry:2
+
 
  - name: modify hosts in vm2
    ansible.builtin.lineinfile:
@@ -128,6 +131,9 @@
      group: root
      path: /etc/hosts
      line: 129.114.25.218 estopinalgui2 kubemaster kubeworker1
+
+ - name: restart docker
+   command: sudo systemctl restart docker
 
 
 

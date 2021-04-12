@@ -20,7 +20,7 @@ spec:                     # This is the specification where we can even put the 
                                              # from all our workers
           imagePullPolicy: Always  # This forces the node to pull the image
           command: ["/kafka_2.13-2.7.0/bin/zookeeper-server-start.sh"]
-          args: ["/kafka_2.13-2.7.0/config/zookeeper.properties",]  # arguments to run. 
+          args: ["/kafka_2.13-2.7.0/config/zookeeper.properties"]  # arguments to run. 
       restartPolicy: Never  # we ask Kubernetes not to restart
 
       #FIXED

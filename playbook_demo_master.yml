@@ -19,19 +19,19 @@
 
 
 
-- name: "Spawn cloud vms"
-  hosts: MyLocalVMs          # specified in the MyInventory file
-  remote_user:  vagrant      # note that the user is ubuntu for 
-                             # vagrant-created VM else use the
-                             # appropriate user name
+# - name: "Spawn cloud vms"
+#   hosts: MyLocalVMs          # specified in the MyInventory file
+#   remote_user:  vagrant      # note that the user is ubuntu for 
+#                              # vagrant-created VM else use the
+#                              # appropriate user name
 
-  gather_facts: yes          # We ask Ansible to collect all facts
-  become_user: no            # No need for sudo as we are not installing anything
+#   gather_facts: yes          # We ask Ansible to collect all facts
+#   become_user: no            # No need for sudo as we are not installing anything
 
-  tasks:    # the task to be performed (here I am showing the effect of include_)
- # - include_tasks: tasks/playbook_get_facts_local_vm.yml
- # - include_tasks: tasks/playbook_get_facts_cloud_vm.yml
-   - include_tasks: tasks/spawn_machine.yaml
+#   tasks:    # the task to be performed (here I am showing the effect of include_)
+#  # - include_tasks: tasks/playbook_get_facts_local_vm.yml
+#  # - include_tasks: tasks/playbook_get_facts_cloud_vm.yml
+#    - include_tasks: tasks/spawn_machine.yaml
 
 - name: "Setup VM2"
   hosts: VM2  # change to the appropriate alias
@@ -100,7 +100,7 @@
 #  - include_tasks: tasks/copy_consumer_to_cloud.yml
   - include_tasks: tasks/setup_kubernetes_vm3.yaml
 
-- name: "Taint master"
+- name: "Taint master and build & push images"
   hosts: VM2  # change to the appropriate alias
   gather_facts: yes
   become: yes
@@ -113,7 +113,8 @@
   # the permissions of the file after copying
   tasks:
 #  - include_tasks: tasks/copy_consumer_to_cloud.yml
-  - include_tasks: tasks/Execute_Pods.yaml
+  - include_tasks: tasks/Taint_Master.yaml
+
 
 # - name: "Start consumer"
 #   hosts: VM2

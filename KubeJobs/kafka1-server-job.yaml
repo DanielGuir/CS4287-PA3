@@ -20,5 +20,5 @@ spec:                     # This is the specification where we can even put the 
                                              # from all our workers
           imagePullPolicy: Always  # This forces the node to pull the image
           command: ["/kafka_2.13-2.7.0/bin/kafka-server-start.sh"]
-          args: ["/kafka_2.13-2.7.0/config/server.properties","--override","broker.id=3","--override","advertised.listeners=PLAINTEXT://129.114.25.218:30002", "--override", "zookeeper.connect=zookeeper-server-svc:2181"]  # arguments to run. 
+          args: ["/kafka_2.13-2.7.0/config/server.properties","--override","broker.id=3","--override","advertised.listeners=PLAINTEXT://129.114.25.218:30002", "--override", "zookeeper.connect=zookeeper-server-svc:2181", "--override", "listeners=PLAINTEXT://:9092"]  # arguments to run. 
       restartPolicy: Never  # we ask Kubernetes not to restart

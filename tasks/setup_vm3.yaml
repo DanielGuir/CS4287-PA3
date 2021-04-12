@@ -87,12 +87,21 @@
  - name: disable swap
    command: sudo swapoff -a 
 
+ - name: copy daemon
+   become: yes
+   copy:
+    src: ./daemon.json   # here you can give absolute path also.
+    dest: /etc/docker  # destination directory into which this file will
+
  - name: modify hosts in vm2
    ansible.builtin.lineinfile:
      path: /etc/hosts
      owner: root
      group: root
      line: 129.114.26.92 estopinalgui3 kubeworker2
+
+ - name: restart docker
+   command: sudo systemctl restart docker
 
 
  #   register: output
