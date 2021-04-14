@@ -51,6 +51,15 @@
    args: 
     chdir: /home/cc/
 
+ - name: Stop registry
+   command: sudo docker stop registry
+ - name: remove registry
+   command: sudo docker rm -v registry
+ - name: restart docker
+   command: sudo systemctl restart docker
+ - name: run docker
+   command: sudo docker run -d -p 5000:5000 --restart=always --name MyRegistry registry:2
+
  - name: tag image
    command: sudo docker tag testimage 129.114.25.218:5000/testimage
 

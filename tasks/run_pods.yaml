@@ -1,0 +1,25 @@
+---
+#Sets up the pods
+
+ - name: change dir
+   command: cd KubeJobs
+ - name: Apply Zookeeper service
+   command: kubectl apply -f zookeeper-server-svc.yaml
+ - name: Apply kafka1 service
+   command: kubectl apply -f kafka1-server-svc.yaml
+ - name: Apply kafka2 service
+   command: kubectl apply -f kafka2-server-svc.yaml
+ - name: Apply couchdb service
+   command: kubectl apply -f couchdb-server-svc.yaml
+ - name: Start zookeeper
+   command: kubectl apply -f zookeeper-server-job.yaml
+ - name: Start kafka1
+   command: kubectl apply -f kafka1-server-job.yaml
+ - name: start kafka2
+   command: kubectl apply -f kafka2-server-job.yaml
+ - name: start couchdb
+   command: kubectl apply -f couchdb-server-job.yaml
+ - name: start consumer
+   command: kubectl apply -f consumer-job.yaml
+
+...
