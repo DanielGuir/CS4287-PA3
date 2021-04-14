@@ -2,7 +2,7 @@
 #Sets up the pods
 
  - name: change dir
-   command: cd KubeJobs
+   command: cd /home/cc/KubeJobs
  - name: Apply Zookeeper service
    command: kubectl apply -f zookeeper-server-svc.yaml
  - name: Apply kafka1 service
