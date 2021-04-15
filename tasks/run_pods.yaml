@@ -1,25 +1,40 @@
 ---
 #Sets up the pods
-
- - name: change dir
-   command: cd /home/cc/KubeJobs
  - name: Apply Zookeeper service
    command: kubectl apply -f zookeeper-server-svc.yaml
+   args:
+     chdir: /home/cc/KubeJobs
  - name: Apply kafka1 service
    command: kubectl apply -f kafka1-server-svc.yaml
+   args:
+     chdir: /home/cc/KubeJobs
  - name: Apply kafka2 service
    command: kubectl apply -f kafka2-server-svc.yaml
+   args:
+     chdir: /home/cc/KubeJobs
  - name: Apply couchdb service
    command: kubectl apply -f couchdb-server-svc.yaml
+   args:
+     chdir: /home/cc/KubeJobs
  - name: Start zookeeper
    command: kubectl apply -f zookeeper-server-job.yaml
+   args:
+     chdir: /home/cc/KubeJobs
  - name: Start kafka1
    command: kubectl apply -f kafka1-server-job.yaml
+   args:
+     chdir: /home/cc/KubeJobs
  - name: start kafka2
    command: kubectl apply -f kafka2-server-job.yaml
+   args:
+     chdir: /home/cc/KubeJobs
  - name: start couchdb
    command: kubectl apply -f couchdb-server-job.yaml
+   args:
+     chdir: /home/cc/KubeJobs
  - name: start consumer
    command: kubectl apply -f consumer-job.yaml
+   args:
+     chdir: /home/cc/KubeJobs
 
 ...
