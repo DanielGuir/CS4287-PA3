@@ -117,8 +117,8 @@
 
 - name: "Start k8 pods"
   hosts: VM2  # change to the appropriate alias
-  gather_facts: yes
-  become: yes
+  gather_facts: no
+  become: no
   remote_user:  cc   # change to the appropriate user name on the cloud
   collections:   # this is new starting with Ansible 2.9 (akin to importing package)
     - openstack.cloud

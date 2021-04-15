@@ -59,6 +59,8 @@
    command: sudo ufw limit 30005/tcp
  - name: execute command ufw
    command: sudo ufw limit 30006/tcp
+ - name: execute ufw command
+   command: sudo ufw allow 8080
 
  # - name: execute command4
  #   command: wget https://apache.osuosl.org/kafka/2.7.0/kafka_2.13-2.7.0.tgz -P /home/cc/
